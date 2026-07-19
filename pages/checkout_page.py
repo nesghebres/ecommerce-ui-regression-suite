@@ -1,6 +1,9 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class CheckoutPage:
+
     """
     Klasse für die Checkout-Seite.
     
@@ -23,6 +26,7 @@ class CheckoutPage:
         :param driver: Ein WebDriver-Objekt.
         """
         self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
 
     def customer(self, first, last, zip_code):
         """
@@ -32,22 +36,19 @@ class CheckoutPage:
         :param last: Nachname des Kunden.
         :param zip_code: Postleitzahl des Kunden.
         """
-        self.driver.find_element(*self.FIRSTNAME).send_keys(first)
+        self.wait.until(EC.visibility_of_element_located(self.FIRSTNAME)).send_keys(first)
+
         self.driver.find_element(*self.LASTNAME).send_keys(last)
         self.driver.find_element(*self.ZIP).send_keys(zip_code)
 
-        self.driver.find_element(*self.CONTINUE).click()
+        self.wait.until(EC.element_to_be_clickable(self.CONTINUE)).click()
 
     def finish(self):
         """
-        Klickt auf den "Finish"-Button.
+        Schließt die Bestellung ab.
         """
-        self.driver.find_element(*self.FINISH).click()
+        self.wait.until(EC.element_to_be_clickable(self.FINISH)).click()
 
-    def is_success(self):
-        """
-        Überprüft, ob die Bestellung erfolgreich abgeschlossen wurde.
+    def success(self):
         
-        :return: True, wenn die Bestellung erfolgreich abgeschlossen wurde, False sonst.
-        """
-        return self.driver.find_element(*self.COMPLETE).text != ""
+        return self.wait.until(EC.visibility_of_element_located(self.COMPLETE)).text
