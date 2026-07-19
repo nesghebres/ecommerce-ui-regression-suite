@@ -62,4 +62,3 @@ class LoginPage:
         element.send_keys(value)
 
 
-
