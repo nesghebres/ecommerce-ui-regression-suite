@@ -1,3 +1,4 @@
+import pytest
 from pages.login_page import LoginPage
 
 @pytest.mark.usefixtures("driver")
@@ -24,3 +25,4 @@ def test_invalid_login(driver):
     login.open()
     login.login("standard_user", "wrongpassword")
     assert "Username and password do not match" in login.error_message()
+
