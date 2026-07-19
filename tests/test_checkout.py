@@ -16,7 +16,7 @@ def test_complete_checkout(driver):
 
     # Inventar-Seite besuchen und Backpack hinzufügen
     inventory = InventoryPage(driver)
-    inventory.add_backpack()
+    inventory.add_product("Sauce Labs Backpack")
     inventory.open_cart()
 
     # Warenkorb-Seite besuchen und Checkout durchführen
